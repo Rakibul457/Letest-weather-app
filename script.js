@@ -5,37 +5,67 @@ const from = document.querySelector('form');
 const search = document.querySelector('#search');
 const weather = document.querySelector("#weather")
  
-const getWeather = async(city)=>{
-     weather.innerHTML = `<h2>Loading.......</h2>`
-    let url =`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
-    const response = await fetch(url)
-    const data = await response.json();
+// const getWeather = async(city)=>{
+//      weather.innerHTML = `<h2>Loading.......</h2>`
+//     let url =`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
+//     const response = await fetch(url)
+//     const data = await response.json();
+//     showData(data);
+    
+    
+// }
+
+// const showData = (data)=>{
+//      if(data.cod == "404"){
+//         weather.innerHTML = `<h1>city not found</h1>`
+//         return;
+//      }
+
+//      console.log(data);
+//      weather.innerHTML = `
+//           <div>
+//                 <img src="https:openweathermap.org/img/wn/${data.weather[0].icon}@2x.png">
+//             </div>
+//             <div>
+//                 <h2>${data.main.temp}℃</h2>
+//                 <h3>${data.weather[0].main}</h3>
+//             </div>
+//      `
+     
+     
+// }
+
+// from.addEventListener("submit",function(event){
+//     getWeather(search.value);
+//     event.preventDefault();
+// })
+async function getWeather (city){
+    let url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${API_KEY}&units=metric`
+    let response = await fetch(url);
+    let data = await response.json();
     showData(data);
-    
-    
+     
 }
-
-const showData = (data)=>{
-     if(data.cod == "404"){
-        weather.innerHTML = `<h1>city not found</h1>`
-        return;
-     }
-
-     console.log(data);
-     weather.innerHTML = `
-          <div>
+function showData (data){
+    if(data.cod == '404'){
+        weather.innerHTML = `<h1>Loading.....</h1>`
+    }
+    console.log(data);
+    weather.innerHTML = `
+    <div>
                 <img src="https:openweathermap.org/img/wn/${data.weather[0].icon}@2x.png">
             </div>
             <div>
                 <h2>${data.main.temp}℃</h2>
                 <h3>${data.weather[0].main}</h3>
             </div>
-     `
-     
-     
+    
+    `
 }
 
+
 from.addEventListener("submit",function(event){
-    getWeather(search.value);
-    event.preventDefault();
+   getWeather(search.value);
+   event.preventDefault();
+   
 })
